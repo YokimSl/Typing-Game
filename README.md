@@ -1,5 +1,6 @@
 # Getting Started with Create React App
 
+![Sem título](https://user-images.githubusercontent.com/49276851/136724581-ab323263-fba9-47ea-980c-b49c16663c73.png)
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
