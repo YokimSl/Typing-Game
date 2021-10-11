@@ -17,9 +17,9 @@ const isValidKey = (key, word) => {
 
 
 const Word = ({word, validKeys}) => {
-             if(!word)return null;
+             if (!word) return null;
         const joinedKeys = validKeys.join('');
-        const matched =word.slice(0,joinedKeys.length);
+        const matched =word.slice(0, joinedKeys.length);
         const remainder = word.slice(joinedKeys.length);
 
 
@@ -37,6 +37,7 @@ const Word = ({word, validKeys}) => {
 const App = () => {
     const [typedKeys, setTypedKeys] = useState([]);
     const [validKeys, setValidKeys] = useState([]);
+    const [completedWords, setCompletedWords] = useState([]);
 
     const [word, setWord] = useState('');
 
@@ -44,6 +45,25 @@ const App = () => {
         setWord(getWord());
     }, []);
 
+    useEffect(() => {
+        const wordFromValidKeys = validKeys.join('').toLowerCase();
+        if (word && word === wordFromValidKeys ){
+
+            let newWord = null;
+            do  {
+                newWord = getWord();
+            }while(completedWords.includes(newWord));
+
+
+            setWord(newWord);
+            setValidKeys([]);
+            setCompletedWords((prev)=> [...prev, word]);
+
+
+
+
+        }
+    }, [word, validKeys]);
   
     const handleKeyDown = (e) => {
         e.preventDefault();
@@ -57,7 +77,7 @@ const App = () => {
                 const isValidlenght = prev.length <= word.length;
                 const isNextChar = isValidlenght && word[prev.length] === key;
                 return (isNextChar) ? [...prev, key] : performance;
-            })
+            });
         }
 
 
@@ -73,10 +93,9 @@ const App = () => {
         <div className="typed-keys">{typedKeys ? typedKeys.join(''): null} </div>
         <div className="completed-words">
             <ol>
-             <li>
-                 Lindo
-            </li>
-            
+                {completedWords.map((word)=>{
+                    return(<li key={word}>{word}</li>)
+                })}
             </ol> </div>
 
 
